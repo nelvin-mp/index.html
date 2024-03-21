@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Pedido con WhatsApp</title>
+</head>
+<body>
+    <h1>Formulario de Pedido con WhatsApp</h1>
+
+    <form id="pedidoForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <br><br>
+
+        <label for="numero_hotel">Número del Cuarto del Hotel:</label>
+        <input type="text" id="numero_hotel" name="numero_hotel" required>
+        <br><br>
+
+        <!-- CATEGORÍA: ASEOS -->
+        <h2><strong>ASEOS</strong></h2>
+        <ul>
+            <li>
+                <label for="afeitador_guillet">✂️ Afeitador Guillet - S/5.00</label>
+                <input type="number" id="afeitador_guillet" name="afeitador_guillet" min="0">
+            </li>
+            <li>
+                <label for="afeitador_simple">✂️ Afeitador Simple - S/3.00</label>
+                <input type="number" id="afeitador_simple" name="afeitador_simple" min="0">
+            </li>
+            <!-- Agrega más productos de la categoría ASEOS si es necesario -->
+        </ul>
+
+        <!-- CATEGORÍA: CIGACHITS -->
+        <h2><strong>CIGACHITS</strong></h2>
+        <ul>
+            <li>
+                <label for="chiclets">🍬 Chiclets - S/1.00</label>
+                <input type="number" id="chiclets" name="chiclets" min="0">
+            </li>
+            <li>
+                <label for="halls_barra">🍬 Halls Barra - S/1.50</label>
+                <input type="number" id="halls_barra" name="halls_barra" min="0">
+            </li>
+            <!-- Agrega más productos de la categoría CIGACHITS si es necesario -->
+        </ul>
+
+        <!-- CATEGORÍA: JABONES -->
+        <h2><strong>JABONES</strong></h2>
+        <ul>
+            <li>
+                <label for="jabon_camay">🧼 Jabón Camay - S/2.00</label>
+                <input type="number" id="jabon_camay" name="jabon_camay" min="0">
+            </li>
+            <li>
+                <label for="jabon_dove_variado">🧼 Jabón Dove Variado - S/3.00</label>
+                <input type="number" id="jabon_dove_variado" name="jabon_dove_variado" min="0">
+            </li>
+            <!-- Agrega más productos de la categoría JABONES si es necesario -->
+        </ul>
+
+        <!-- CATEGORÍA: GALLETAS -->
+        <h2><strong>GALLETAS</strong></h2>
+        <ul>
+            <li>
+                <label for="galleta_soda">🍪 Galleta Soda - S/2.50</label>
+                <input type="number" id="galleta_soda" name="galleta_soda" min="0">
+            </li>
+            <li>
+                <label for="chocman">🍪 Chocman - S/3.00</label>
+                <input type="number" id="chocman" name="chocman" min="0">
+            </li>
+            <!-- Agrega más productos de la categoría GALLETAS si es necesario -->
+        </ul>
+
+        <button type="button" onclick="generarPedido()">Enviar Pedido por WhatsApp</button>
+    </form>
+
+    <script>
+        function generarPedido() {
+            var nombre = document.getElementById('nombre').value.trim();
+            var numeroHotel = document.getElementById('numero_hotel').value.trim();
+
+            var mensajePedido = "🛒 *Pedido de " + nombre + " - Cuarto " + numeroHotel + "* 🛒\n\n";
+
+            var productos = document.querySelectorAll('input[type="number"]');
+            productos.forEach(function(producto) {
+                if (producto.value > 0) {
+                    mensajePedido += producto.previousElementSibling.textContent.trim() + " - Cantidad: " + producto.value + "\n";
+                }
+            });
+
+            var whatsappNumero = "51963866718"; // Tu número de WhatsApp
+            var whatsappMensaje = encodeURIComponent(mensajePedido);
+            var whatsappLink = "https://wa.me/" + whatsappNumero + "?text=" + whatsappMensaje;
+            window.open(whatsappLink);
+        }
+    </script>
+</body>
+</html>
